@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: microblogX
+  datasource:
+    url: jdbc:sqlite:db.microblogX
+
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  server:
+    port: 8080
