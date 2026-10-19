@@ -3,6 +3,7 @@ package br.com.microblog.microblogX.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import br.com.microblog.microblogX.dto.RegisterRequest;
 import br.com.microblog.microblogX.dto.RegisterResponse;
 import br.com.microblog.microblogX.model.UserModel;
 import br.com.microblog.microblogX.repository.UserRepository;
+import br.com.microblog.microblogX.security.TokenConfig;
 
 
 @Service 
@@ -27,6 +29,9 @@ public class AuthService {
     
     @Autowired 
     private PasswordEncoder passwordEncoder;
+
+    @Autowired 
+    private TokenConfig tokenConfig;
 
     public RegisterResponse register(RegisterRequest request){
         if(userRepository.existsByUsername(request.username())){
@@ -43,8 +48,14 @@ public class AuthService {
         UserModel saved = userRepository.save(user);
         return new RegisterResponse(saved.getId(), saved.getUsername(), saved.getEmail());
     }
-    //public LoginResponse login(LoginRequest request){
-        //new UsernamePasswordAuthenticationToken(request.username(), request.password());
+    public LoginResponse login(LoginRequest request){
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(request.username(), request.password()));
 
-    //}
+        UserModel user = userRepository.findByUsername(request.username())
+            .orElseThrow(() -> new BadCredentialsException("usuário ou senha inválidos"));
+
+        String token = tokenConfig.generateToken(user);
+        return new LoginResponse(token);
+    }
 }
