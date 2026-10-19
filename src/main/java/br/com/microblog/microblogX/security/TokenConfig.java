@@ -10,8 +10,8 @@ import br.com.microblog.microblogX.model.UserModel;
 
 @Component 
 public class TokenConfig {
-    public String generateToken(UserModel user){
-        return JWT.create()
-        .withClaim("", null)
-    }
+    //public String generateToken(UserModel user){
+        //return JWT.create()
+        //.withClaim("", null)
+    //}
 }
