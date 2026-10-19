@@ -10,12 +10,17 @@ import br.com.microblog.microblogX.dto.RegisterRequest;
 import br.com.microblog.microblogX.dto.RegisterResponse;
 import br.com.microblog.microblogX.model.UserModel;
 import br.com.microblog.microblogX.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 
 @Service 
+@RequiredArgsConstructor 
 public class AuthService {
-    private final UserRepository userRepository = null;
-    private final AuthenticationManager authenticationManager = null;
-    private final PasswordEncoder passwordEncoder = null;
+    
+    private UserRepository userRepository;
+   
+    private AuthenticationManager authenticationManager;
+    
+    private PasswordEncoder passwordEncoder;
 
     public RegisterResponse register(RegisterRequest request){
         if(userRepository.existsByUsername(request.username())){
