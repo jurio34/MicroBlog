@@ -2,6 +2,7 @@ package br.com.microblog.microblogX.security;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,12 +11,12 @@ import org.springframework.stereotype.Service;
 
 import br.com.microblog.microblogX.model.UserModel;
 import br.com.microblog.microblogX.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+
 
 @Service
-@RequiredArgsConstructor 
+
 public class CustomUserDetailsService implements UserDetailsService{
-   
+   @Autowired 
     private UserRepository userRepository;
     
     @Override
