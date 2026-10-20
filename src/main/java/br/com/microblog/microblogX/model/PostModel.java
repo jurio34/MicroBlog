@@ -12,6 +12,7 @@ public class PostModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     @Column(nullable = false, length = 260)
     private String content;
 
