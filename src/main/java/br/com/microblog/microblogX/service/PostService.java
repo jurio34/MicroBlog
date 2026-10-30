@@ -20,10 +20,8 @@ public class PostService {
     @Autowired
     private UserRepository userRepository;
 
-
     public PostResponse create(Long userId, PostRequest request){
-        UserModel author = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("usuário não encontrado!"));
-        
+        UserModel author = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("usuário não encontrado"));
         PostModel post = new PostModel();
         post.setAuthor(author);
         post.setContent(request.content());
@@ -31,13 +29,18 @@ public class PostService {
         PostModel saved = postRepository.save(post);
         return toResponse(saved);
     }
+
     private PostResponse toResponse(PostModel post) {
         return new PostResponse(
-            post.getId(),
-            post.getContent(),
-            post.getCreatedAt(),
-            new AuthorResponse(post.getAuthor().getId(), post.getAuthor().getUsername()),
-            0,
-            false);
+                post.getId(),
+                post.getContent(),
+                post.getCreatedAt(),
+                new AuthorResponse(post.getAuthor().getId(), post.getAuthor().getUsername()),
+                0,
+                false);
     }
+
 }
+
+
+
