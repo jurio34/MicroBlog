@@ -2,8 +2,6 @@ package br.com.microblog.microblogX.controller;
 
 import br.com.microblog.microblogX.dto.PagedResponse;
 import br.com.microblog.microblogX.service.PostService;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
