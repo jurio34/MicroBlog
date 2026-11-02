@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -53,5 +54,21 @@ class PostServiceTest {
         Assertions.assertNotNull(res);
         verify(userRepository).findById(userId);
         verify(postRepository).save(any());
+    }
+    @Test
+    @DisplayName("Deve lançar falha se o usuário não existir")
+    void createFail(){
+        Long userId = 99L;
+        PostRequest request = new PostRequest("Meu primeiro post");
+
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+
+        Assertions.assertThrows(ResponseStatusException.class, () -> {
+            postService.create(userId, request);
+        });
+
+        verify(userRepository).findById(userId);
+        verify(postRepository, never()).save(any());
     }
 }
