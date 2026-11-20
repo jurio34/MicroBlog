@@ -32,4 +32,6 @@ public class PostController {
     public PagedResponse<PostResponse> feed(@PageableDefault(size = 20)Pageable pageable){
         return postService.feed(pageable);
     }
+
+
 }

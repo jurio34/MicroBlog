@@ -5,6 +5,7 @@ package br.com.microblog.microblogX.security;
 import java.time.Instant;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.auth0.jwt.JWT;
@@ -16,8 +17,9 @@ import br.com.microblog.microblogX.model.UserModel;
 
 @Component 
 public class TokenConfig {
-    
-    private String secret = "secret";
+
+    @Value("${jwt.secret}")
+    private String secret;
 
 
     public String generateToken(UserModel user){

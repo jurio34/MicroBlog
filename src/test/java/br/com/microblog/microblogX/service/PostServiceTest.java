@@ -63,7 +63,6 @@ class PostServiceTest {
 
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
-
         Assertions.assertThrows(ResponseStatusException.class, () -> {
             postService.create(userId, request);
         });
