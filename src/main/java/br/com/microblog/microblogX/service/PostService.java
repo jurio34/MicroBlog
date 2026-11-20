@@ -47,6 +47,15 @@ public class PostService {
         Page<PostModel> posts = postRepository.findAllByOrderByCreatedAtDesc(pageable);
         return PagedResponse.from(posts.map(this::toResponse));
     }
+    public void delete(Long postId, Long userId){
+        PostModel post = postRepository.findById(postId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "post não encontrado"));
+
+        if(!post.getAuthor().getId().equals(userId)){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não pode apagar este post");
+        }
+        postRepository.delete(post);
+    }
 
 }
 

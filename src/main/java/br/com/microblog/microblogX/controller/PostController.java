@@ -32,6 +32,10 @@ public class PostController {
     public PagedResponse<PostResponse> feed(@PageableDefault(size = 20)Pageable pageable){
         return postService.feed(pageable);
     }
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id, @AuthenticationPrincipal JWTUserData user){
+        postService.delete(id, user.userId());
+        return ResponseEntity.noContent().build();
+    }
 
 }
