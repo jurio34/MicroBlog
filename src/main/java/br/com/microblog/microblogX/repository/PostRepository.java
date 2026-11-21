@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 public interface PostRepository extends JpaRepository<PostModel, Long> {
     Page<PostModel> findAllByOrderByCreatedAtDesc(Pageable pageable);
     Page<PostModel> findByAuthorOrderByCreatedAtDesc(UserModel author, Pageable pageable);
-
+    long countByAuthor(UserModel author);
     @Query("""
             SELECT p FROM PostModel p
                     WHERE p.author.id IN (
